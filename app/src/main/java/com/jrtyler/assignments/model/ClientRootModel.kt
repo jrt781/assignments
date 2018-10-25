@@ -107,5 +107,21 @@ object ClientRootModel {
 		val course = getCourse(assignment.courseId)
 		course?.assignments?.add(assignment)
 	}
-
+	
+	fun getAllAssignmentsNotCompletedGroupedByDateForCourse(courseId: String): TreeMap<Date, TreeSet<Assignment>> {
+		checkInit()
+		val upcomingDateMap = TreeMap<Date, TreeSet<Assignment>>()
+		
+		val course = getCourse(courseId) as Course
+		for (assignment in course.assignments) {
+			if (assignment.status == AssignmentStatus.NOT_DONE) {
+				if (!upcomingDateMap.containsKey(assignment.dueDate)) {
+					upcomingDateMap[assignment.dueDate] = TreeSet()
+				}
+				upcomingDateMap[assignment.dueDate]?.add(assignment)
+			}
+		}
+		return upcomingDateMap
+	}
+	
 }

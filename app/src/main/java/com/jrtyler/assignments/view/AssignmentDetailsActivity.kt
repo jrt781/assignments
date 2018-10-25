@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat
 import com.jrtyler.assignments.R
@@ -15,26 +14,24 @@ import kotlinx.android.synthetic.main.content_assignment_details.*
 
 class AssignmentDetailsActivity : AppCompatActivity() {
 
-    var assignment: Assignment? = null
+    private var assignment: Assignment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_assignment_details)
         setSupportActionBar(toolbar)
 
-        edit_assignment_fab.setOnClickListener { view ->
+        edit_assignment_fab.setOnClickListener { _ ->
             startActivity(EditAssignmentActivity.newIntent(this, assignment))
         }
-
-        assignment_details_name_tv
-
+		
         assignment = intent.getSerializableExtra(ASSIGNMENT_KEY) as? Assignment
 		
 		val lastDate = assignment?.dueDate
 		if (lastDate != null)
 			ClientRootModel.dateNotCompletedLastOn = lastDate
 
-        initTextViews()
+        initViews()
 
         if (ClientRootModel.getAssignment(assignment?.id)?.status == AssignmentStatus.DONE)
             complete_button.text = "Incomplete"
@@ -60,11 +57,11 @@ class AssignmentDetailsActivity : AppCompatActivity() {
         super.onResume()
         
         assignment = ClientRootModel.getAssignment(assignment?.id)
-        initTextViews()
+        initViews()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initTextViews() {
+    private fun initViews() {
         assignment_details_name_tv.text = assignment?.name
 
         val dueDateString = assignment?.dueDate.toString()
@@ -85,9 +82,8 @@ class AssignmentDetailsActivity : AppCompatActivity() {
 		assignment_details_course_tv.text = course?.toString()
 		assignment_details_course_tv.setBackgroundColor(ContextCompat.getColor(this, color))
 		assignment_details_course_tv.setOnClickListener {
-			
+			startActivity(CourseDetailsActivity.newIntent(this, course!!))
 		}
-        // TODO set onclick listener for assignment_details_course_tv
 
         assignment_details_notes_tv.text = assignment?.notes
     }

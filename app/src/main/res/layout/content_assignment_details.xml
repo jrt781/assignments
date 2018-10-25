@@ -36,7 +36,7 @@
 		<TextView
 			android:id="@+id/assignment_details_course_tv"
 			style="@style/h6"
-			android:text="@string/default_class"
+			android:text="@string/default_course"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:background="@color/readableBlue"

@@ -1,12 +1,13 @@
 package com.jrtyler.assignments.model
 
+import java.io.Serializable
 import java.util.*
 
 class Course(var abbrev: String,
 			 var name: String = "",
 			 var professor: String = "",
 			 var color: Color = Color.BLUE)
-	: Comparable<Course> {
+	: Comparable<Course>, Serializable {
 	
 	override fun compareTo(other: Course): Int {
 		if (abbrev != other.abbrev) return abbrev.compareTo(other.abbrev)
@@ -19,7 +20,9 @@ class Course(var abbrev: String,
 	var assignments: ArrayList<Assignment> = ArrayList()
 
 	var meetings: ArrayList<Meeting> = ArrayList()
-
+	
+	var notes: String = ""
+	
 	override fun toString(): String {
 		return abbrev
 	}

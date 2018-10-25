@@ -39,7 +39,7 @@ class EditAssignmentActivity : AppCompatActivity() {
 		} else {
 			assignment = Assignment("", "", Date(), Time())
 			title = Html.fromHtml("<font color='#FFFFFF'>Create Assignment</font>")
-//			save_edits_btn.text = "Create"
+			save_btn.text = "Create"
 		}
 		
 		editedAssignment = Assignment(assignment)
@@ -48,7 +48,9 @@ class EditAssignmentActivity : AppCompatActivity() {
 		name_et.setText(editedAssignment.name)
 		due_date_et.setText(editedAssignment.dueDate.toString())
 		due_time_et.setText(editedAssignment.dueTime.toString())
-		course_et.setText(ClientRootModel.getCourse(editedAssignment.courseId).toString())
+		course_et.setText(
+			(ClientRootModel.getCourse(editedAssignment.courseId) ?: ClientRootModel.courses[0]).toString()
+		)
 		notes_et.setText(editedAssignment.notes)
 		
 		// Set response listeners for each UI element

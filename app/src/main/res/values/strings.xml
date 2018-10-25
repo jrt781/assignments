@@ -14,7 +14,7 @@
 	<string name="delete">Delete</string>
 	<string name="default_assignment_name">Assignment name</string>
 	<string name="default_due_date_due_time">Due date @ due time</string>
-	<string name="default_class">CS 142</string>
+	<string name="default_course">CS 142</string>
 	<string name="default_notes">lots of notes</string>
 	<string name="default_course_abbrev">CS 142</string>
 	<string name="default_time">11:30 AM</string>
@@ -25,14 +25,5 @@
 	<string name="save">Save</string>
 	<string name="cancel">Cancel</string>
 	<string name="assignment_notes_hint">Notes</string>
-	<string name="title_activity_courses">CoursesActivity</string>
-	<string name="title_section1">Section 1</string>
-	<string name="title_section2">Section 2</string>
-	<string name="title_section3">Section 3</string>
-	
-	<string name="action_example">Example action</string>
-	<string name="tab_text_1">Tab 1</string>
-	<string name="tab_text_2">Tab 2</string>
-	<string name="tab_text_3">Tab 3</string>
-	<string name="section_format">Hello World from section: %1$d</string>
+	<string name="title_activity_course_details">Course Details</string>
 </resources>

@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util.*
 
 class Time(var hour: Int = Calendar.getInstance().get(Calendar.HOUR) + 1,
-		   var minute: Int = Calendar.getInstance().get(Calendar.MINUTE),
+		   var minute: Int = 0,
 		   var meridian: Meridian
 		   		= if ((Calendar.getInstance().get(Calendar.AM_PM) == Calendar.PM
 						   && Calendar.getInstance().get(Calendar.HOUR) != 11)
