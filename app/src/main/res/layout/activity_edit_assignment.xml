@@ -12,7 +12,9 @@
 	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:id="@+id/edit_assignment_layout"
+	>
 		
 		<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="match_parent"
@@ -78,8 +80,16 @@
 			android:layout_margin="@dimen/field_margin"
 			>
 			
+			<!--
 			<Spinner
 				android:id="@+id/course_spinner"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+			/>
+			-->
+			
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/course_et"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 			/>

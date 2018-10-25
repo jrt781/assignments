@@ -7,9 +7,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import com.jrtyler.assignments.R
 import com.jrtyler.assignments.model.Assignment
 import com.jrtyler.assignments.model.ClientRootModel
@@ -44,16 +48,7 @@ class EditAssignmentActivity : AppCompatActivity() {
 		name_et.setText(editedAssignment.name)
 		due_date_et.setText(editedAssignment.dueDate.toString())
 		due_time_et.setText(editedAssignment.dueTime.toString())
-		val strings = Array(ClientRootModel.courses.size) {""}
-		var currentCoursePosition= 0
-		for (i in 0 until ClientRootModel.courses.size) {
-			strings[i] = ClientRootModel.courses[i].abbrev
-			if (ClientRootModel.courses[i].id == editedAssignment.courseId) {
-				currentCoursePosition = i
-			}
-		}
-		course_spinner.adapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strings)
-		course_spinner.setSelection(currentCoursePosition)
+		course_et.setText(ClientRootModel.getCourse(editedAssignment.courseId).toString())
 		notes_et.setText(editedAssignment.notes)
 		
 		// Set response listeners for each UI element
@@ -86,27 +81,37 @@ class EditAssignmentActivity : AppCompatActivity() {
 			} else {
 			}
 		}
-
-		course_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-			override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-				val item = parent.getItemAtPosition(pos) as String
-				for (course in ClientRootModel.courses)
-					if (course.abbrev == item)
-						editedAssignment.courseId = course.id
+		
+		course_et.setOnTouchListener { v, event ->
+			if (event.action == MotionEvent.ACTION_UP) {
+				val popupMenu = PopupMenu(this, v)
+				
+				for (course in ClientRootModel.courses) {
+					popupMenu.menu.add(course.toString())
+					// TODO maybe make the currently selected course a different color
+				}
+				
+				popupMenu.setOnMenuItemClickListener {item: MenuItem? ->
+					
+					for (course in ClientRootModel.courses)
+						if (course.toString() == item?.title)
+							editedAssignment.courseId = course.id
+					
+					course_et.setText(ClientRootModel.getCourse(editedAssignment.courseId).toString())
+					
+					true
+				}
+				
+				popupMenu.show()
+				
+				popupMenu.setOnDismissListener {
+					currentFocus?.clearFocus()
+					currentFocus?.clearFocus()
+				}
 			}
-			override fun onNothingSelected(parentView: AdapterView<*>) {}
+			
+			true
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		notes_et.addTextChangedListener(object: TextWatcher {
 			override fun afterTextChanged(s: Editable) {}
