@@ -26,4 +26,8 @@
 	<string name="cancel">Cancel</string>
 	<string name="assignment_notes_hint">Notes</string>
 	<string name="title_activity_course_details">Course Details</string>
+	<string name="course_name_hint">Name</string>
+	<string name="course_abbrev_hint">Abbreviation</string>
+	<string name="course_color_hint">Color</string>
+	<string name="course_notes_hint">Notes</string>
 </resources>

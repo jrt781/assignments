@@ -124,4 +124,22 @@ object ClientRootModel {
 		return upcomingDateMap
 	}
 	
+	fun addCourse(course: Course) {
+		checkInit()
+		val pos: Int = removeCourse(course.id)
+		
+		courses.add(pos, course)
+	}
+	
+	private fun removeCourse(id: String): Int {
+		checkInit()
+		for ((x, course) in courses.withIndex()) {
+			if (course.id == id) {
+				courses.remove(course)
+				return x
+			}
+		}
+		return courses.size
+	}
+	
 }

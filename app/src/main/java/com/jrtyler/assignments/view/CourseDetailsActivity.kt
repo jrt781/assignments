@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +25,7 @@ class CourseDetailsActivity : AppCompatActivity() {
 		setSupportActionBar(toolbar)
 		
 		edit_course_fab.setOnClickListener { _ ->
-//			startActivity(EditAssignmentActivity.newIntent(this, assignment))
-			Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
+			startActivity(EditCourseActivity.newIntent(this, course))
 		}
 		
 		course = intent.getSerializableExtra(COURSE_KEY) as? Course
@@ -44,7 +42,7 @@ class CourseDetailsActivity : AppCompatActivity() {
 	
 	@SuppressLint("SetTextI18n")
 	private fun initViews() {
-		course_details_name_tv.text = course?.name
+		course_details_name_tv.text = course?.fullName
 		
 		val color:Int = when (course?.color) {
 			Color.BLUE -> R.color.readableBlue
@@ -59,7 +57,7 @@ class CourseDetailsActivity : AppCompatActivity() {
 		course_details_notes_tv.text = course?.notes
 		
 		course_assignments_rv.layoutManager = LinearLayoutManager(this)
-		course_assignments_rv.adapter = UpcomingCourseAdapter(this, course!!)
+		course_assignments_rv.adapter = CourseUpcomingAdapter(this, course!!)
 	}
 	
 	override fun onSupportNavigateUp(): Boolean {

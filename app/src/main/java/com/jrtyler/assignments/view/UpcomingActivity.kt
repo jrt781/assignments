@@ -3,7 +3,6 @@ package com.jrtyler.assignments.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -27,7 +26,7 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         setContentView(R.layout.activity_upcoming)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { _ ->
+        upcoming_fab.setOnClickListener { _ ->
             startActivity(EditAssignmentActivity.newIntent(this))
         }
 

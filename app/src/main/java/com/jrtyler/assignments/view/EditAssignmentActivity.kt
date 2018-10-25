@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -29,8 +30,6 @@ class EditAssignmentActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_edit_assignment)
-		
-		supportActionBar!!.title
 		
 		val existingAssignment = intent.getBooleanExtra(EDIT_EXISTING_ASSIGNMENT_KEY, false)
 		if (existingAssignment) {

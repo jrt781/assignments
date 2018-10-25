@@ -7,14 +7,16 @@
 	android:layout_height="match_parent"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:showIn="@layout/activity_assignment_details"
-	tools:context=".view.AssignmentDetailsActivity">
+	tools:context=".view.AssignmentDetailsActivity"
+>
 	
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:padding="20dp"
-		>
+		android:clipToPadding="false"
+	>
 		
 		<TextView
 			android:id="@+id/assignment_details_name_tv"
@@ -30,7 +32,6 @@
 			android:text="@string/default_due_date_due_time"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			
 		/>
 		
 		<TextView
@@ -46,12 +47,15 @@
 			android:paddingStart="15dp"
 			android:paddingEnd="15dp"
 			android:layout_marginTop="10dp"
+			android:elevation="5dp"
 		/>
 		
 		<TextView
 			android:id="@+id/assignment_details_notes_tv"
 			style="@style/body"
 			android:text="@string/default_notes"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="10dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 		/>

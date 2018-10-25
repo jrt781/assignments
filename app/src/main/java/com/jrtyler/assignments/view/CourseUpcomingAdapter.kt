@@ -14,7 +14,7 @@ import com.jrtyler.assignments.model.*
 import kotlinx.android.synthetic.main.date_list_item.view.*
 import kotlinx.android.synthetic.main.upcoming_assignment_list_item.view.*
 
-class UpcomingCourseAdapter (private val context: Context, private val course: Course)
+class CourseUpcomingAdapter (private val context: Context, private val course: Course)
 	: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	
 	companion object {
