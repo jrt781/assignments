@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.MaterialComponents.CardView"
+        android:id="@+id/assignment_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+		android:layout_marginBottom="@dimen/mtrl_card_spacing"
+		app:cardElevation="3dp"
+		>
+	
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			
+			<com.jrtyler.assignments.view.VerticalTextView
+				android:text="@string/default_course_abbrev"
+				style="@style/body"
+				android:layout_width="wrap_content"
+				android:layout_height="fill_parent"
+				android:id="@+id/course_abbrev_tv"
+				android:gravity="bottom|end"
+				android:layout_gravity="center"
+				android:background="@color/readableBlue"
+				android:textColor="@color/lightText"
+				android:layout_margin="0dp"
+				android:textAlignment="center"
+				android:padding="10dp"
+				android:maxLines="1"
+				android:ellipsize="end"
+			/>
+			
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="15dp"
+				android:orientation="vertical"
+			>
+				
+				<TextView
+					android:id="@+id/upcoming_assignment_name_tv"
+					style="@style/h5"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/default_assignment_name"
+					android:maxLines="1"
+					android:ellipsize="end"
+				/>
+				
+				<TextView
+					android:id="@+id/upcoming_assignment_due_time_tv"
+					style="@style/h6"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/default_time"
+				/>
+			
+			</LinearLayout>
+		</LinearLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
