@@ -18,12 +18,11 @@
                 android:title="@string/create_a_course"/>
     </group>
 
-    <item android:title="@string/my_courses">
+    <item
+		android:id="@+id/my_courses"
+        android:title="@string/my_courses">
         <menu>
-            <item
-                    android:id="@+id/nav_class"
-                    android:icon="@drawable/nav_course"
-                    android:title="Share"/>
+			
         </menu>
     </item>
 

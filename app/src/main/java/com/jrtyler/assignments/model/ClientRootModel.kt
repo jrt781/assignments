@@ -69,7 +69,7 @@ object ClientRootModel {
 	fun getCourse(courseId: String?): Course? {
 		checkInit()
 		for (course in courses) {
-			if (course.id == courseId) {
+			if (course.id == courseId || course.abbrev == courseId) {
 				return course
 			}
 		}

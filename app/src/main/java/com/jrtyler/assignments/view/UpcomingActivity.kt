@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jrtyler.assignments.R
 import com.jrtyler.assignments.model.ClientRootModel
 import com.jrtyler.assignments.model.Date
@@ -46,6 +45,11 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 		ClientRootModel.dateNotCompletedLastOn = Date()
 
         nav_view.setNavigationItemSelectedListener(this)
+		val coursesMenu = nav_view.menu.findItem(R.id.my_courses).subMenu
+		for (course in ClientRootModel.courses) {
+			val item = coursesMenu.add(course.abbrev)
+			item.setIcon(R.drawable.nav_course)
+		}
     }
     
     private fun jumpToToday() {
@@ -148,6 +152,11 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.nav_create_course -> {
 
             }
+			else -> {
+				val course = ClientRootModel.getCourse(item.title.toString()) ?: return false
+				val intent = CourseDetailsActivity.newIntent(this, course)
+				startActivity(intent)
+			}
         }
 		
 
