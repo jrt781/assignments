@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Upcoming Assignments</string>
+	<string name="app_name">Upcoming</string>
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 	<string name="nav_header_title">Android Studio</string>
@@ -30,4 +30,20 @@
 	<string name="course_abbrev_hint">Abbreviation</string>
 	<string name="course_color_hint">Color</string>
 	<string name="course_notes_hint">Notes</string>
+	<string name="title_activity_upcoming_assignments">Upcoming Assignments</string>
+	<string name="action_today">Jump to Today</string>
+	<string name="action_mark">Mark as Complete</string>
+	<string name="my_courses">My Courses</string>
+	<string name="upcoming_assignments">Upcoming Assignments</string>
+	<string name="completed_assignments">Completed Assignments</string>
+	<string name="create_a_course">Create a Course</string>
+	<string name="title_activity_completed">Completed Assignments</string>
+	<string name="title_section1">Section 1</string>
+	<string name="title_section2">Section 2</string>
+	<string name="title_section3">Section 3</string>
+	
+	<string name="action_example">Example action</string>
+	<string name="no_completed">Mark some courses as completed to see some assignments here!</string>
+	<string name="action_top">Jump to Top</string>
+	<string name="action_unmark">Mark as Not Complete</string>
 </resources>

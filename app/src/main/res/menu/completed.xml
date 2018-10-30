@@ -6,7 +6,7 @@
 		android:icon="@drawable/ic_today"
 		app:showAsAction="ifRoom"/>
 	<item android:id="@+id/action_mark"
-		android:title="@string/action_mark"
+		android:title="@string/action_unmark"
 		android:icon="@drawable/ic_check"
 		app:showAsAction="ifRoom"/>
 </menu>

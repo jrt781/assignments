@@ -18,6 +18,15 @@ class Date(var day: Int = Calendar.getInstance().get(Calendar.DATE),
 		if (this.day > other.day) return 1
 		return 0
 	}
+	
+	override fun equals(other: Any?): Boolean {
+		if (other == null) return false
+		val that = other as com.jrtyler.assignments.model.Date
+		if (this.year != that.year) return false
+		if (this.month != that.month) return false
+		if (this.day != that.day) return false
+		return true
+	}
 
 	var dayOfWeek: DayOfWeek = DayOfWeek.MONDAY
 		get() = calculateDayOfWeek()

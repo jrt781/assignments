@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_upcoming_assignments"
+                android:icon="@drawable/nav_home"
+                android:title="@string/upcoming_assignments"/>
+        <item
+                android:id="@+id/nav_completed_assignments"
+                android:icon="@drawable/nav_completed"
+                android:title="@string/completed_assignments"/>
+        <item
+                android:id="@+id/nav_create_course"
+                android:icon="@drawable/nav_create"
+                android:title="@string/create_a_course"/>
+    </group>
+
+    <item android:title="@string/my_courses">
+        <menu>
+            <item
+                    android:id="@+id/nav_class"
+                    android:icon="@drawable/nav_course"
+                    android:title="Share"/>
+        </menu>
+    </item>
+
+</menu>

@@ -42,14 +42,14 @@ class EditAssignmentActivity : AppCompatActivity() {
 		}
 		
 		editedAssignment = Assignment(assignment)
+		val course = (ClientRootModel.getCourse(editedAssignment.courseId) ?: ClientRootModel.courses[0])
+		editedAssignment.courseId = course.id
 		
 		// Set the status of each UI element based on the assignment
 		name_et.setText(editedAssignment.name)
 		due_date_et.setText(editedAssignment.dueDate.toString())
 		due_time_et.setText(editedAssignment.dueTime.toString())
-		course_et.setText(
-			(ClientRootModel.getCourse(editedAssignment.courseId) ?: ClientRootModel.courses[0]).toString()
-		)
+		course_et.setText(course.toString())
 		notes_et.setText(editedAssignment.notes)
 		
 		// Set response listeners for each UI element

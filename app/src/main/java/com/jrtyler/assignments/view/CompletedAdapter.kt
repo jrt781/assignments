@@ -2,7 +2,6 @@ package com.jrtyler.assignments.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,7 @@ import com.jrtyler.assignments.model.*
 import kotlinx.android.synthetic.main.date_list_item.view.*
 import kotlinx.android.synthetic.main.upcoming_assignment_list_item.view.*
 
-class UpcomingAdapter (private val context: Context)
+class CompletedAdapter (private val context: Context)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -24,23 +23,30 @@ class UpcomingAdapter (private val context: Context)
         const val ERROR_TYPE = 2
     }
 
-    var itemsNotCompleted : ArrayList<Any> = ArrayList()
+    var itemsCompleted : ArrayList<Any> = ArrayList()
 
     init {
         updateItems()
     }
 
     private fun updateItems() {
-        itemsNotCompleted.clear()
-
-        val upcomingDateMap = ClientRootModel.getAllAssignmentsNotCompletedGroupedByDate()
-
-        for (date in upcomingDateMap.keys) {
-            itemsNotCompleted.add(date)
-            for (assignment in upcomingDateMap[date]!!) {
-                itemsNotCompleted.add(assignment)
+        itemsCompleted.clear()
+    
+        val completedDateMap = ClientRootModel.getAllAssignmentsCompletedGroupedByDate()
+    
+        // iterate in reverse order
+        for (date in completedDateMap.keys) {
+            val tempList = ArrayList<Assignment>()
+            for (assignment in completedDateMap[date]!!) {
+                tempList.add(assignment)
             }
+            tempList.reverse()
+            for (assignment in tempList) {
+                itemsCompleted.add(0, assignment)
+            }
+            itemsCompleted.add(0, date)
         }
+    
         notifyDataSetChanged()
     }
 
@@ -60,7 +66,7 @@ class UpcomingAdapter (private val context: Context)
     }
 
     override fun getItemCount(): Int {
-        return itemsNotCompleted.size
+        return itemsCompleted.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -78,7 +84,7 @@ class UpcomingAdapter (private val context: Context)
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = itemsNotCompleted[position]
+        val item = itemsCompleted[position]
         if (item is Date){
             return DATE_TYPE
         } else if (item is Assignment) {
@@ -100,7 +106,7 @@ class UpcomingAdapter (private val context: Context)
             multiSelect = true
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.toolbar_cab, menu)
-            mode.title = "Mark as Complete"
+            mode.title = "Mark as Not Complete"
 
             return true
         }
@@ -116,7 +122,7 @@ class UpcomingAdapter (private val context: Context)
             // When there are more than one itemsCompleted in the menu, check which one was clicked
             val numCompleted = selectedItems.size
             for (intItem in selectedItems) {
-                (itemsNotCompleted[intItem] as Assignment).status = AssignmentStatus.DONE
+                (itemsCompleted[intItem] as Assignment).status = AssignmentStatus.NOT_DONE
             }
             updateItems()
             mode.finish()
@@ -125,7 +131,7 @@ class UpcomingAdapter (private val context: Context)
             if (numCompleted > 0) {
                 val s = if (numCompleted == 1) "" else "s"
                 Snackbar.make((context as AppCompatActivity).window.decorView.findViewById(R.id.upcoming_layout),
-                    "Marked $numCompleted assignment$s as complete",
+                    "Marked $numCompleted assignment$s as not complete",
                     Snackbar.LENGTH_LONG).show()
             }
 
@@ -178,7 +184,7 @@ class UpcomingAdapter (private val context: Context)
         @SuppressLint("PrivateResource")
 		fun update(value: Int) {
 
-            this.assignment = itemsNotCompleted[value] as Assignment
+            this.assignment = itemsCompleted[value] as Assignment
             upcomingAssignmentNameTv.text = assignment?.name
             upcomingAssignmentDueTimeTv.text = assignment?.dueTime.toString()
 
@@ -223,13 +229,8 @@ class UpcomingAdapter (private val context: Context)
         var dateTv: TextView = view.upcoming_date_tv
 		
 		fun update(value: Int) {
-			val date = itemsNotCompleted[value] as Date
+			val date = itemsCompleted[value] as Date
 			this.dateTv.text = date.toString()
-			if (date == Date()) {
-				this.dateTv.setTypeface(null, Typeface.BOLD)
-			} else {
-				this.dateTv.setTypeface(null, Typeface.NORMAL)
-			}
 		}
     }
 }

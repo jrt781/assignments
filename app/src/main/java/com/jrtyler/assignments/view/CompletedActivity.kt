@@ -9,25 +9,23 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jrtyler.assignments.R
+import com.jrtyler.assignments.model.Assignment
 import com.jrtyler.assignments.model.ClientRootModel
 import com.jrtyler.assignments.model.Date
-import kotlinx.android.synthetic.main.activity_upcoming.*
-import kotlinx.android.synthetic.main.app_bar_upcoming.*
-import kotlinx.android.synthetic.main.content_upcoming.*
+import kotlinx.android.synthetic.main.activity_completed.*
+import kotlinx.android.synthetic.main.app_bar_completed.*
+import kotlinx.android.synthetic.main.content_completed.*
 
-class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class CompletedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 	
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upcoming)
+        setContentView(R.layout.activity_completed)
         setSupportActionBar(toolbar)
-
-        upcoming_fab.setOnClickListener { _ ->
-            startActivity(EditAssignmentActivity.newIntent(this))
-        }
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
@@ -36,12 +34,14 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+		
+		checkNumCompleted()
 
         // Creates a vertical layout Manager
-        rv_upcoming.layoutManager = LinearLayoutManager(this)
+        rv_completed.layoutManager = LinearLayoutManager(this)
 
         // Access the RecyclerView Adapter and load the data into it
-        rv_upcoming.adapter = UpcomingAdapter(this)
+        rv_completed.adapter = CompletedAdapter(this)
 		
 		ClientRootModel.dateNotCompletedLastOn = Date()
 
@@ -59,29 +59,48 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 	private fun jumpToDate(dateJump: Date) {
 		var position = 0
 		
-		val upcomingDateMap = ClientRootModel.getAllAssignmentsNotCompletedGroupedByDate()
-		val itemsNotCompleted : ArrayList<Any> = ArrayList()
+		val completedDateMap = ClientRootModel.getAllAssignmentsCompletedGroupedByDate()
+		val itemsCompleted : ArrayList<Any> = ArrayList()
 		
-		for (date in upcomingDateMap.keys) {
-			if (date >= dateJump) {
-				position = itemsNotCompleted.size
-				break
+		// iterate in reverse order
+		for (date in completedDateMap.keys) {
+			val tempList = ArrayList<Assignment>()
+			for (assignment in completedDateMap[date]!!) {
+				tempList.add(assignment)
 			}
-			itemsNotCompleted.add(date)
-			for (assignment in upcomingDateMap[date]!!) {
-				itemsNotCompleted.add(assignment)
+			tempList.reverse()
+			for (assignment in tempList) {
+				itemsCompleted.add(0, assignment)
+				position++
+			}
+			itemsCompleted.add(0, date)
+			position++
+			if (date < dateJump) {
+				position = 0
 			}
 		}
 		
-		(rv_upcoming.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
+		if (position >= itemsCompleted.size)
+			position = itemsCompleted.size - 1
+		
+		(rv_completed.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
+	}
+	
+	private fun checkNumCompleted() {
+		if (ClientRootModel.getAllAssignmentsCompletedGroupedByDate().keys.size > 0) {
+			no_completed_tv.visibility = GONE
+		} else {
+			no_completed_tv.visibility = VISIBLE
+		}
 	}
 	
     override fun onResume() {
         super.onResume()
 
-        rv_upcoming.adapter = UpcomingAdapter(this)
+        rv_completed.adapter = CompletedAdapter(this)
 		
 		jumpToLastUsedDate()
+		checkNumCompleted()
 
 //        if (ClientRootModel.courses.size == 0) {
 //            val findCoursesButton = find_courses_btn
@@ -113,7 +132,7 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.upcoming, menu)
+        menuInflater.inflate(R.menu.completed, menu)
         return true
     }
 
@@ -127,7 +146,7 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 				true
 			}
 			R.id.action_mark -> {
-				(rv_upcoming.adapter as UpcomingAdapter).startCAB()
+				(rv_completed.adapter as CompletedAdapter).startCAB()
 				true
 			}
 			else -> super.onOptionsItemSelected(item)
@@ -137,14 +156,14 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-			R.id.nav_upcoming_assignments -> {
+            R.id.nav_upcoming_assignments -> {
 				val intent = UpcomingActivity.newIntent(this)
 				startActivity(intent)
-			}
-			R.id.nav_completed_assignments -> {
+            }
+            R.id.nav_completed_assignments -> {
 				val intent = CompletedActivity.newIntent(this)
 				startActivity(intent)
-			}
+            }
             R.id.nav_create_course -> {
 
             }
@@ -158,7 +177,7 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     companion object {
 
         fun newIntent(context: Context): Intent {
-            val intent = Intent(context, UpcomingActivity::class.java)
+            val intent = Intent(context, CompletedActivity::class.java)
             return intent
         }
     }

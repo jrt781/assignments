@@ -13,7 +13,7 @@
 		tools:ignore="GoogleAppIndexingWarning">
 		<activity
 			android:name=".view.UpcomingActivity"
-			android:label="@string/app_name"
+			android:label="@string/title_activity_upcoming_assignments"
 			android:theme="@style/AppTheme.NoActionBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
@@ -33,6 +33,11 @@
 			android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 		<activity android:name=".view.EditCourseActivity">
+		</activity>
+		<activity
+			android:name=".view.CompletedActivity"
+			android:label="@string/title_activity_completed"
+			android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 	</application>
 

@@ -13,6 +13,7 @@ import com.jrtyler.assignments.model.Color
 import com.jrtyler.assignments.model.Course
 
 import kotlinx.android.synthetic.main.activity_course_details.*
+import kotlinx.android.synthetic.main.app_bar_course_details.*
 import kotlinx.android.synthetic.main.content_course_details.*
 
 class CourseDetailsActivity : AppCompatActivity() {
