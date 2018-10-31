@@ -6,6 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
+	android:id="@+id/course_layout"
 	tools:showIn="@layout/activity_course_details"
 	tools:context=".view.CourseDetailsActivity">
 	

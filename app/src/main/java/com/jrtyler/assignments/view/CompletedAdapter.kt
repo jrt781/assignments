@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.jrtyler.assignments.R
 import com.jrtyler.assignments.model.*
 import kotlinx.android.synthetic.main.date_list_item.view.*
-import kotlinx.android.synthetic.main.upcoming_assignment_list_item.view.*
+import kotlinx.android.synthetic.main.assignment_list_item.view.*
 
 class CompletedAdapter (private val context: Context)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,11 +58,11 @@ class CompletedAdapter (private val context: Context)
             )
             ASSIGNMENT_TYPE -> return UpcomingAssignmentViewHolder(
                 LayoutInflater.from(context)
-                    .inflate(R.layout.upcoming_assignment_list_item, parent, false))
+                    .inflate(R.layout.assignment_list_item, parent, false))
         }
         return UpcomingAssignmentViewHolder(
             LayoutInflater.from(context)
-                .inflate(R.layout.upcoming_assignment_list_item, parent, false))
+                .inflate(R.layout.assignment_list_item, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -130,7 +130,7 @@ class CompletedAdapter (private val context: Context)
             // Snackbar
             if (numCompleted > 0) {
                 val s = if (numCompleted == 1) "" else "s"
-                Snackbar.make((context as AppCompatActivity).window.decorView.findViewById(R.id.upcoming_layout),
+                Snackbar.make((context as AppCompatActivity).window.decorView.findViewById(R.id.completed_layout),
                     "Marked $numCompleted assignment$s as not complete",
                     Snackbar.LENGTH_LONG).show()
             }
@@ -151,9 +151,9 @@ class CompletedAdapter (private val context: Context)
 
     inner class UpcomingAssignmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private var upcomingAssignmentDueTimeTv: TextView = view.upcoming_assignment_due_time_tv
+        private var upcomingAssignmentDueTimeTv: TextView = view.assignment_due_time_tv
 
-        private var upcomingAssignmentNameTv: TextView = view.upcoming_assignment_name_tv
+        private var upcomingAssignmentNameTv: TextView = view.assignment_name_tv
 
         private var assignment: Assignment? = null
 

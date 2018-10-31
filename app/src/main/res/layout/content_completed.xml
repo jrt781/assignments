@@ -7,7 +7,7 @@
 	android:layout_height="match_parent"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:showIn="@layout/app_bar_completed"
-	android:id="@+id/upcoming_layout"
+	android:id="@+id/completed_layout"
 	android:layout_marginLeft="20dp"
 	android:layout_marginRight="20dp"
 	tools:context=".view.CompletedActivity">

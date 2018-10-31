@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.jrtyler.assignments.R
 import com.jrtyler.assignments.model.*
 import kotlinx.android.synthetic.main.date_list_item.view.*
-import kotlinx.android.synthetic.main.upcoming_assignment_list_item.view.*
+import kotlinx.android.synthetic.main.assignment_list_item.view.*
 
 class UpcomingAdapter (private val context: Context)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -52,11 +52,11 @@ class UpcomingAdapter (private val context: Context)
             )
             ASSIGNMENT_TYPE -> return UpcomingAssignmentViewHolder(
                 LayoutInflater.from(context)
-                    .inflate(R.layout.upcoming_assignment_list_item, parent, false))
+                    .inflate(R.layout.assignment_list_item, parent, false))
         }
         return UpcomingAssignmentViewHolder(
             LayoutInflater.from(context)
-                .inflate(R.layout.upcoming_assignment_list_item, parent, false))
+                .inflate(R.layout.assignment_list_item, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -145,9 +145,9 @@ class UpcomingAdapter (private val context: Context)
 
     inner class UpcomingAssignmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private var upcomingAssignmentDueTimeTv: TextView = view.upcoming_assignment_due_time_tv
+        private var upcomingAssignmentDueTimeTv: TextView = view.assignment_due_time_tv
 
-        private var upcomingAssignmentNameTv: TextView = view.upcoming_assignment_name_tv
+        private var upcomingAssignmentNameTv: TextView = view.assignment_name_tv
 
         private var assignment: Assignment? = null
 

@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.jrtyler.assignments.R
 import com.jrtyler.assignments.model.*
 import kotlinx.android.synthetic.main.date_list_item.view.*
-import kotlinx.android.synthetic.main.upcoming_assignment_list_item.view.*
+import kotlinx.android.synthetic.main.assignment_list_item.view.*
 
 class CourseUpcomingAdapter (private val context: Context, private val course: Course)
 	: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -45,17 +45,17 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		when (viewType) {
-			DATE_TYPE -> return UpcomingDateViewHolder(
+			DATE_TYPE -> return DateViewHolder(
 				LayoutInflater.from(context)
 					.inflate(R.layout.date_list_item, parent, false)
 			)
-			ASSIGNMENT_TYPE -> return UpcomingAssignmentViewHolder(
+			ASSIGNMENT_TYPE -> return AssignmentViewHolder(
 				LayoutInflater.from(context)
-					.inflate(R.layout.upcoming_assignment_list_item, parent, false))
+					.inflate(R.layout.assignment_list_item, parent, false))
 		}
-		return UpcomingAssignmentViewHolder(
+		return AssignmentViewHolder(
 			LayoutInflater.from(context)
-				.inflate(R.layout.upcoming_assignment_list_item, parent, false))
+				.inflate(R.layout.assignment_list_item, parent, false))
 	}
 	
 	override fun getItemCount(): Int {
@@ -65,12 +65,12 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 		when (holder.itemViewType) {
 			DATE_TYPE -> {
-				val viewHolder0 =  holder as UpcomingDateViewHolder
+				val viewHolder0 =  holder as DateViewHolder
 				viewHolder0.dateTv.text = itemsNotCompleted[position].toString()
 			}
 			
 			ASSIGNMENT_TYPE -> {
-				val viewHolder1 = holder as UpcomingAssignmentViewHolder
+				val viewHolder1 = holder as AssignmentViewHolder
 				viewHolder1.update(position)
 			}
 		}
@@ -123,7 +123,7 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 			// Snackbar
 			if (numCompleted > 0) {
 				val s = if (numCompleted == 1) "" else "s"
-				Snackbar.make((context as AppCompatActivity).window.decorView.findViewById(R.id.upcoming_layout),
+				Snackbar.make((context as AppCompatActivity).window.decorView.findViewById(R.id.course_layout),
 					"Marked $numCompleted assignment$s as complete",
 					Snackbar.LENGTH_LONG).show()
 			}
@@ -142,29 +142,21 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 	// === End multi-select ============================================================================================
 	// =================================================================================================================
 	
-	inner class UpcomingAssignmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-		
-		private var upcomingAssignmentDueTimeTv: TextView = view.upcoming_assignment_due_time_tv
-		
-		private var upcomingAssignmentNameTv: TextView = view.upcoming_assignment_name_tv
+	inner class AssignmentViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 		
 		private var assignment: Assignment? = null
-		
-		private var card: MaterialCardView = view.assignment_card
-		
-		private var courseVtv: VerticalTextView = view.course_abbrev_tv
 		
 		@SuppressLint("PrivateResource")
 		private fun selectItem(item: Int) {
 			if (multiSelect) {
 				if (selectedItems.contains(item)) {
 					selectedItems.remove(item)
-					card.setBackgroundColor(ContextCompat.getColor(context,
+					view.assignment_card.setBackgroundColor(ContextCompat.getColor(context,
 						R.color.cardview_light_background
 					))
 				} else {
 					selectedItems.add(item)
-					card.setBackgroundColor(ContextCompat.getColor(context,
+					view.assignment_card.setBackgroundColor(ContextCompat.getColor(context,
 						R.color.colorLightTint
 					))
 				}
@@ -179,16 +171,18 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 		fun update(value: Int) {
 			
 			this.assignment = itemsNotCompleted[value] as Assignment
-			upcomingAssignmentNameTv.text = assignment?.name
-			upcomingAssignmentDueTimeTv.text = assignment?.dueTime.toString()
+			view.assignment_name_tv.text = assignment?.name
+			view.assignment_due_time_tv.text = assignment?.dueTime.toString()
 			
-			if (selectedItems.contains(value)) {
-				card.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLightTint))
+			val color = if (selectedItems.contains(value)) {
+				ContextCompat.getColor(context, R.color.colorLightTint)
 			} else {
-				card.setBackgroundColor(ContextCompat.getColor(context, R.color.cardview_light_background))
+				ContextCompat.getColor(context, R.color.cardview_light_background)
 			}
 			
-			courseVtv.visibility = View.GONE
+			view.assignment_card.setBackgroundColor(color)
+			
+			view.course_abbrev_tv.visibility = View.GONE
 			
 			itemView.setOnLongClickListener {view ->
 				if (!multiSelect) {
@@ -203,7 +197,7 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 		
 	}
 	
-	class UpcomingDateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+	class DateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 		var dateTv: TextView = view.upcoming_date_tv
 	}
 }

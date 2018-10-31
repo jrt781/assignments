@@ -47,7 +47,7 @@
 			>
 				
 				<TextView
-					android:id="@+id/upcoming_assignment_name_tv"
+					android:id="@+id/assignment_name_tv"
 					style="@style/h5"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
 				/>
 				
 				<TextView
-					android:id="@+id/upcoming_assignment_due_time_tv"
+					android:id="@+id/assignment_due_time_tv"
 					style="@style/h6"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
