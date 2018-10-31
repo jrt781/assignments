@@ -36,7 +36,7 @@ class EditAssignmentActivity : AppCompatActivity() {
 			assignment = intent.getSerializableExtra(ASSIGNMENT_KEY) as Assignment
 			title = Html.fromHtml("<font color='#FFFFFF'>Edit Assignment</font>")
 		} else {
-			assignment = Assignment("", "", Date(), Time())
+			assignment = intent.getSerializableExtra(ASSIGNMENT_KEY) as? Assignment ?: Assignment("", "", Date.tomorrow(), Time())
 			title = Html.fromHtml("<font color='#FFFFFF'>Create Assignment</font>")
 			save_btn.text = "Create"
 		}
@@ -44,6 +44,7 @@ class EditAssignmentActivity : AppCompatActivity() {
 		editedAssignment = Assignment(assignment)
 		val course = (ClientRootModel.getCourse(editedAssignment.courseId) ?: ClientRootModel.courses[0])
 		editedAssignment.courseId = course.id
+		save_btn.isEnabled = editedAssignment.name.isNotEmpty()
 		
 		// Set the status of each UI element based on the assignment
 		name_et.setText(editedAssignment.name)
@@ -58,6 +59,8 @@ class EditAssignmentActivity : AppCompatActivity() {
 			override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 				editedAssignment.name = s.toString()
+				
+				save_btn.isEnabled = s.isNotEmpty()
 			}
 		})
 		
@@ -87,16 +90,15 @@ class EditAssignmentActivity : AppCompatActivity() {
 			if (event.action == MotionEvent.ACTION_UP) {
 				val popupMenu = PopupMenu(this, v)
 				
-				for (course in ClientRootModel.courses) {
-					popupMenu.menu.add(course.toString())
-					// TODO maybe make the currently selected course a different color
+				for (courseM in ClientRootModel.courses) {
+					popupMenu.menu.add(courseM.toString())
 				}
 				
 				popupMenu.setOnMenuItemClickListener {item: MenuItem? ->
 					
-					for (course in ClientRootModel.courses)
-						if (course.toString() == item?.title)
-							editedAssignment.courseId = course.id
+					for (courseI in ClientRootModel.courses)
+						if (courseI.toString() == item?.title)
+							editedAssignment.courseId = courseI.id
 					
 					course_et.setText(ClientRootModel.getCourse(editedAssignment.courseId).toString())
 					
@@ -137,13 +139,12 @@ class EditAssignmentActivity : AppCompatActivity() {
 		private const val ASSIGNMENT_KEY = "ASSIGNMENT"
 		private const val EDIT_EXISTING_ASSIGNMENT_KEY = "EDIT_EXISTING_ASSIGNMENT"
 		
-		fun newIntent(context: Context, assignment: Assignment?): Intent {
+		fun newIntent(context: Context, assignment: Assignment?, existing: Boolean = true): Intent {
 			val intent = Intent(context, EditAssignmentActivity::class.java)
 			intent.putExtra(ASSIGNMENT_KEY, assignment)
-			intent.putExtra(EDIT_EXISTING_ASSIGNMENT_KEY, true)
+			intent.putExtra(EDIT_EXISTING_ASSIGNMENT_KEY, existing)
 			return intent
 		}
-		
 		fun newIntent(context: Context): Intent {
 			val intent = Intent(context, EditAssignmentActivity::class.java)
 			intent.putExtra(EDIT_EXISTING_ASSIGNMENT_KEY, false)

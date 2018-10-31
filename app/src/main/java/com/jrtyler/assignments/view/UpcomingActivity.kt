@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.content_upcoming.*
 
 class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 	
+	
+	
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcoming)
@@ -35,6 +37,9 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+	
+		nav_view.setNavigationItemSelectedListener(this)
+		recalculateCoursesForMenu()
 
         // Creates a vertical layout Manager
         rv_upcoming.layoutManager = LinearLayoutManager(this)
@@ -43,14 +48,17 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         rv_upcoming.adapter = UpcomingAdapter(this)
 		
 		ClientRootModel.dateNotCompletedLastOn = Date()
-
-        nav_view.setNavigationItemSelectedListener(this)
+		
+    }
+	
+	private fun recalculateCoursesForMenu() {
 		val coursesMenu = nav_view.menu.findItem(R.id.my_courses).subMenu
+		coursesMenu.clear()
 		for (course in ClientRootModel.courses) {
 			val item = coursesMenu.add(course.abbrev)
 			item.setIcon(R.drawable.nav_course)
 		}
-    }
+	}
     
     private fun jumpToToday() {
 		jumpToDate(Date())
@@ -80,12 +88,15 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 		(rv_upcoming.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
 	}
 	
+	
+	
     override fun onResume() {
         super.onResume()
 
         rv_upcoming.adapter = UpcomingAdapter(this)
 		
 		jumpToLastUsedDate()
+		recalculateCoursesForMenu()
 
 //        if (ClientRootModel.courses.size == 0) {
 //            val findCoursesButton = find_courses_btn
@@ -150,7 +161,8 @@ class UpcomingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 				startActivity(intent)
 			}
             R.id.nav_create_course -> {
-
+				val intent = EditCourseActivity.newIntent(this)
+				startActivity(intent)
             }
 			else -> {
 				val course = ClientRootModel.getCourse(item.title.toString()) ?: return false

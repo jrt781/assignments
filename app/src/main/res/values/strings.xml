@@ -46,4 +46,7 @@
 	<string name="no_completed">Mark some courses as completed to see some assignments here!</string>
 	<string name="action_top">Jump to Top</string>
 	<string name="action_unmark">Mark as Not Complete</string>
+	<string name="its_empty">It\'s empty in here!</string>
+	<string name="add_assignment_instructions">Create an assignment by tapping the plus button in the bottom right.
+	</string>
 </resources>

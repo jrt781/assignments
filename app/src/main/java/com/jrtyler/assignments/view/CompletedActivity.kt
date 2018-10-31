@@ -34,18 +34,21 @@ class CompletedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+	
+		nav_view.setNavigationItemSelectedListener(this)
+		
+		recalculateCoursesForMenu()
 		
 		checkNumCompleted()
-
-        // Creates a vertical layout Manager
-        rv_completed.layoutManager = LinearLayoutManager(this)
-
-        // Access the RecyclerView Adapter and load the data into it
-        rv_completed.adapter = CompletedAdapter(this)
-		
+	
+		// Creates a vertical layout Manager
+		rv_completed.layoutManager = LinearLayoutManager(this)
+	
+		// Access the RecyclerView Adapter and load the data into it
+		rv_completed.adapter = CompletedAdapter(this)
+	
 		ClientRootModel.dateNotCompletedLastOn = Date()
 
-        nav_view.setNavigationItemSelectedListener(this)
     }
     
     private fun jumpToToday() {
@@ -152,27 +155,42 @@ class CompletedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 			else -> super.onOptionsItemSelected(item)
 		}
     }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_upcoming_assignments -> {
+	
+	private fun recalculateCoursesForMenu() {
+		val coursesMenu = nav_view.menu.findItem(R.id.my_courses).subMenu
+		coursesMenu.clear()
+		for (course in ClientRootModel.courses) {
+			val item = coursesMenu.add(course.abbrev)
+			item.setIcon(R.drawable.nav_course)
+		}
+	}
+	
+	override fun onNavigationItemSelected(item: MenuItem): Boolean {
+		// Handle navigation view item clicks here.
+		when (item.itemId) {
+			R.id.nav_upcoming_assignments -> {
 				val intent = UpcomingActivity.newIntent(this)
 				startActivity(intent)
-            }
-            R.id.nav_completed_assignments -> {
+			}
+			R.id.nav_completed_assignments -> {
 				val intent = CompletedActivity.newIntent(this)
 				startActivity(intent)
-            }
-            R.id.nav_create_course -> {
-
-            }
-        }
+			}
+			R.id.nav_create_course -> {
+				val intent = EditCourseActivity.newIntent(this)
+				startActivity(intent)
+			}
+			else -> {
+				val course = ClientRootModel.getCourse(item.title.toString()) ?: return false
+				val intent = CourseDetailsActivity.newIntent(this, course)
+				startActivity(intent)
+			}
+		}
 		
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
-    }
+		
+		drawer_layout.closeDrawer(GravityCompat.START)
+		return true
+	}
 
     companion object {
 

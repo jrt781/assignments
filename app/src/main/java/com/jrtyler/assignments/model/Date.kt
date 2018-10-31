@@ -115,4 +115,45 @@ class Date(var day: Int = Calendar.getInstance().get(Calendar.DATE),
 		}
 	}
 	
+	
+	
+	companion object {
+		
+		private fun numDaysOfMonth(month: Int): Int {
+			return when(month) {
+				1 ->  31
+				2 ->  28
+				3 ->  31
+				4 ->  30
+				5 ->  31
+				6 ->  30
+				7 ->  31
+				8 ->  31
+				9 ->  30
+				10 ->  31
+				11 ->  30
+				12 ->  31
+				else -> 31
+			}
+		}
+		
+		fun tomorrow():com.jrtyler.assignments.model.Date {
+			val date = com.jrtyler.assignments.model.Date(
+				Calendar.getInstance().get(Calendar.DATE) + 1,
+				Calendar.getInstance().get(Calendar.MONTH) + 1,
+				Calendar.getInstance().get(Calendar.YEAR))
+			
+			if (date.day > numDaysOfMonth(date.month)) {
+				date.day = 1
+				date.month++
+				if (date.month > 12) {
+					date.month = 1
+					date.year++
+				}
+			}
+			
+			return date
+		}
+	}
+	
 }

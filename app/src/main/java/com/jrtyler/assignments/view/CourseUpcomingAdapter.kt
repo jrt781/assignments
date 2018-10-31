@@ -170,7 +170,7 @@ class CourseUpcomingAdapter (private val context: Context, private val course: C
 				}
 			} else {
 				val intent = AssignmentDetailsActivity.newIntent(itemView.context,
-					this.assignment ?: return)
+					this.assignment ?: return, false)
 				itemView.context.startActivity(intent)
 			}
 		}

@@ -11,6 +11,7 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme"
 		tools:ignore="GoogleAppIndexingWarning">
+		
 		<activity
 			android:name=".view.UpcomingActivity"
 			android:label="@string/title_activity_upcoming_assignments"
@@ -21,24 +22,24 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".view.AssignmentDetailsActivity"
-			android:label="@string/title_activity_assignment_details"
-			android:theme="@style/AppTheme.NoActionBar">
-		</activity>
-		<activity android:name=".view.EditAssignmentActivity"/>
-		<activity
-			android:name=".view.CourseDetailsActivity"
-			android:label="@string/title_activity_course_details"
-			android:theme="@style/AppTheme.NoActionBar">
-		</activity>
-		<activity android:name=".view.EditCourseActivity">
-		</activity>
+		
 		<activity
 			android:name=".view.CompletedActivity"
 			android:label="@string/title_activity_completed"
-			android:theme="@style/AppTheme.NoActionBar">
-		</activity>
+			android:theme="@style/AppTheme.NoActionBar"/>
+		
+		<activity
+			android:name=".view.CourseDetailsActivity"
+			android:label="@string/title_activity_course_details"
+			android:theme="@style/AppTheme.NoActionBar"/>
+		
+		<activity
+			android:name=".view.AssignmentDetailsActivity"
+			android:label="@string/title_activity_assignment_details"
+			android:theme="@style/AppTheme.NoActionBar" />
+		
+		<activity android:name=".view.EditCourseActivity" />
+		<activity android:name=".view.EditAssignmentActivity"/>
 	</application>
 
 </manifest>

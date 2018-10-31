@@ -8,7 +8,8 @@ data class Assignment(var name: String = "",
 					  var courseId: String,
 					  var dueDate: com.jrtyler.assignments.model.Date = Date(),
 					  var dueTime: Time = Time(),
-					  var notes: String = "") : Comparable<Assignment>, Serializable {
+					  var notes: String = "",
+					  var status:AssignmentStatus = AssignmentStatus.NOT_DONE) : Comparable<Assignment>, Serializable {
 
 	constructor(assignment: Assignment) : this(assignment.name, assignment.courseId,
 			assignment.dueDate, assignment.dueTime, assignment.notes) {
@@ -16,9 +17,7 @@ data class Assignment(var name: String = "",
 	}
 
 	private var tags: MutableSet<Tag> = HashSet()
-
-	var status = AssignmentStatus.NOT_DONE
-
+	
 	var id: String = UUID.randomUUID().toString()
 		private set
 

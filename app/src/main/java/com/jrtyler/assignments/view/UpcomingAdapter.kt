@@ -170,7 +170,7 @@ class UpcomingAdapter (private val context: Context)
                 }
             } else {
                 val intent = AssignmentDetailsActivity.newIntent(itemView.context,
-                    this.assignment ?: return)
+                    this.assignment ?: return, true)
                 itemView.context.startActivity(intent)
             }
         }
@@ -197,6 +197,10 @@ class UpcomingAdapter (private val context: Context)
 				Color.RED -> R.color.readableRed
 				Color.GREEN -> R.color.readableGreen
 				Color.YELLOW -> R.color.readableYellow
+				Color.PINK -> R.color.readablePink
+				Color.PURPLE -> R.color.readablePurple
+				Color.ORANGE -> R.color.readableOrange
+				Color.TEAL -> R.color.readableTeal
 				else -> R.color.readableRed
 			}
 			

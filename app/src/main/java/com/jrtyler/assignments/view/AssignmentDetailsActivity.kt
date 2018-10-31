@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.content_assignment_details.*
 class AssignmentDetailsActivity : AppCompatActivity() {
 
     private var assignment: Assignment? = null
+	private var canSeeCourse: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class AssignmentDetailsActivity : AppCompatActivity() {
         }
 		
         assignment = intent.getSerializableExtra(ASSIGNMENT_KEY) as? Assignment
+		canSeeCourse = intent.getBooleanExtra(CAN_SEE_COURSE_KEY, false)
 		
 		val lastDate = assignment?.dueDate
 		if (lastDate != null)
@@ -76,13 +78,20 @@ class AssignmentDetailsActivity : AppCompatActivity() {
 			Color.RED -> R.color.readableRed
 			Color.GREEN -> R.color.readableGreen
 			Color.YELLOW -> R.color.readableYellow
+			Color.PINK -> R.color.readablePink
+			Color.PURPLE -> R.color.readablePurple
+			Color.ORANGE -> R.color.readableOrange
+			Color.TEAL -> R.color.readableTeal
 			else -> R.color.readableRed
 		}
 	
+		assignment_details_course_tv.elevation = if (this.canSeeCourse) {8f} else {0f}
 		assignment_details_course_tv.text = course?.toString()
 		assignment_details_course_tv.setBackgroundColor(ContextCompat.getColor(this, color))
-		assignment_details_course_tv.setOnClickListener {
-			startActivity(CourseDetailsActivity.newIntent(this, course!!))
+		if (canSeeCourse) {
+			assignment_details_course_tv.setOnClickListener {
+				startActivity(CourseDetailsActivity.newIntent(this, course!!))
+			}
 		}
 
         assignment_details_notes_tv.text = assignment?.notes
@@ -95,10 +104,12 @@ class AssignmentDetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val ASSIGNMENT_KEY = "ASSIGNMENT"
+		private const val CAN_SEE_COURSE_KEY = "CAN_SEE_COURSE"
 
-        fun newIntent(context: Context, assignment: Assignment): Intent {
+        fun newIntent(context: Context, assignment: Assignment, canSeeCourse: Boolean): Intent {
             val intent = Intent(context, AssignmentDetailsActivity::class.java)
             intent.putExtra(ASSIGNMENT_KEY, assignment)
+			intent.putExtra(CAN_SEE_COURSE_KEY, canSeeCourse)
             return intent
         }
     }

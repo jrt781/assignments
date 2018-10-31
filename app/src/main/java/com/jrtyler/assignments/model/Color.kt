@@ -21,4 +21,24 @@ enum class Color {
 			return "Yellow"
 		}
 	},
+	PINK {
+		override fun toString(): String {
+			return "Pink"
+		}
+	},
+	ORANGE {
+		override fun toString(): String {
+			return "Orange"
+		}
+	},
+	PURPLE {
+		override fun toString(): String {
+			return "Purple"
+		}
+	},
+	TEAL {
+		override fun toString(): String {
+			return "Teal"
+		}
+	},
 }

@@ -13,7 +13,11 @@
 	<color name="readableRed">#FF4136</color>
 	<color name="readableGreen">#228B22</color>
 	<color name="readableYellow">#FDE541</color>
+	<color name="readablePink">#ff3399</color>
+	<color name="readableOrange">#ffaa00</color>
+	<color name="readablePurple">#990099</color>
+	<color name="readableTeal">#33BBBB</color>
 	
-    <color name="lightText">#FFFFFF</color>
+	<color name="lightText">#FFFFFF</color>
 	<color name="white">#FFFFFF</color>
 </resources>

@@ -16,7 +16,6 @@ import com.jrtyler.assignments.model.ClientRootModel
 import com.jrtyler.assignments.model.Color
 import com.jrtyler.assignments.model.Course
 import kotlinx.android.synthetic.main.activity_edit_course.*
-import kotlinx.android.synthetic.main.upcoming_assignment_list_item.*
 
 class EditCourseActivity : AppCompatActivity() {
 	
@@ -27,8 +26,8 @@ class EditCourseActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_edit_course)
 		
-		val existingAssignment = intent.getBooleanExtra(EDIT_EXISTING_COURSE_KEY, false)
-		if (existingAssignment) {
+		val existingCourse = intent.getBooleanExtra(EDIT_EXISTING_COURSE_KEY, false)
+		if (existingCourse) {
 			course = intent.getSerializableExtra(COURSE_KEY) as Course
 			title = Html.fromHtml("<font color='#FFFFFF'>Edit Course</font>")
 		} else {
@@ -38,6 +37,8 @@ class EditCourseActivity : AppCompatActivity() {
 		}
 		
 		editedCourse = Course(course)
+		
+		save_btn.isEnabled = editedCourse.abbrev.isNotEmpty()
 		
 		// Set the status of each UI element based on the course
 		name_et.setText(editedCourse.name)
@@ -58,6 +59,7 @@ class EditCourseActivity : AppCompatActivity() {
 			override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 			override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 				editedCourse.abbrev = s.toString()
+				save_btn.isEnabled = s.isNotEmpty()
 			}
 		})
 		
@@ -65,18 +67,26 @@ class EditCourseActivity : AppCompatActivity() {
 			if (event.action == MotionEvent.ACTION_UP) {
 				val popupMenu = PopupMenu(this, v)
 				
-				popupMenu.menu.add("Blue")
-				popupMenu.menu.add("Red")
-				popupMenu.menu.add("Yellow")
-				popupMenu.menu.add("Green")
+				popupMenu.menu.add(Color.RED.toString())
+				popupMenu.menu.add(Color.ORANGE.toString())
+				popupMenu.menu.add(Color.YELLOW.toString())
+				popupMenu.menu.add(Color.GREEN.toString())
+				popupMenu.menu.add(Color.TEAL.toString())
+				popupMenu.menu.add(Color.BLUE.toString())
+				popupMenu.menu.add(Color.PURPLE.toString())
+				popupMenu.menu.add(Color.PINK.toString())
 				
 				popupMenu.setOnMenuItemClickListener {item: MenuItem? ->
 					
 					editedCourse.color = when(item?.title) {
-						"Blue" -> Color.BLUE
-						"Red" -> Color.RED
-						"Green" -> Color.GREEN
-						"Yellow" -> Color.YELLOW
+						Color.BLUE.toString() -> Color.BLUE
+						Color.RED.toString() -> Color.RED
+						Color.GREEN.toString() -> Color.GREEN
+						Color.YELLOW.toString() -> Color.YELLOW
+						Color.PINK.toString() -> Color.PINK
+						Color.PURPLE.toString() -> Color.PURPLE
+						Color.ORANGE.toString() -> Color.ORANGE
+						Color.TEAL.toString() -> Color.TEAL
 						else -> Color.RED
 					}
 					
@@ -98,6 +108,10 @@ class EditCourseActivity : AppCompatActivity() {
 		
 		save_btn.setOnClickListener { _: View ->
 			ClientRootModel.addCourse(editedCourse)
+			if (!existingCourse) {
+				val intent = CourseDetailsActivity.newIntent(baseContext, editedCourse)
+				startActivity(intent)
+			}
 			finish()
 		}
 		
@@ -107,8 +121,8 @@ class EditCourseActivity : AppCompatActivity() {
 	}
 	
 	companion object {
-		private const val COURSE_KEY = "ASSIGNMENT"
-		private const val EDIT_EXISTING_COURSE_KEY = "EDIT_EXISTING_ASSIGNMENT"
+		private const val COURSE_KEY = "COURSE"
+		private const val EDIT_EXISTING_COURSE_KEY = "EDIT_EXISTING_COURSE"
 		
 		fun newIntent(context: Context, course: Course?): Intent {
 			val intent = Intent(context, EditCourseActivity::class.java)
